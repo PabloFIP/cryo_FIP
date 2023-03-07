@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Galeria de Fotos</title>
+	<meta charset='utf-8'>
+	<meta http-equiv="Cache-control" content="no-cache">
+	<link rel="stylesheet" type="text/css" href="vendor/semantic-ui/css/semantic.css">	
+	<link rel="stylesheet" type="text/css" href="css/custom.css">	
+	<!-- <script src="js/jquery-1.11.1.min.js"></script> -->
+	<script src="js/jquery-2.1.1.min.js"></script>
+	<script src="vendor/semantic-ui/javascript/semantic.js"></script>
+	<script src="data/data.js"></script>
+	<script src="js/scripts.js"></script>
+</head>
+
+<body>
+	<div class="ui fixed transparent inverted main menu">
+		<div class="ui one column page grid">
+			<a class="title item" href='index.html'><i class='list layout icon'></i>Menú Principal</a>	
+			<a class="title item" href='resumen.html'><i class='info icon'></i>Resumen</a>	
+			<a class="title item" href='ejercicios.html'><i class='checked checkbox icon'></i>Ejercicios Interactivos</a>	
+			<a class="active title item" href='gallery.html'><i class='photo icon'></i>Galería de Imágenes</a>	
+			<!-- <a class="title item" href='practicetest.html'><i class='checked checkbox icon'></i>Exámen Práctica</a>	 -->
+		</div>
+	</div>
+
+	<div class="inner-content">
+		<div class="container">
+			<div class="filters">
+				<button class='ui button mini active'>Todos</button>	
+				<button class='ui button mini black' data-category='c'>Cancer</button>	
+				<button class='ui button mini black' data-category='p'>Positivos</button>	
+				<button class='ui button mini black' data-category='n'>Negativos</button>	
+			</div>
+
+			<div id="gallery"></div>
+
+		</div>	
+	</div>
+
+
+	<div class="ui modal large">
+		<i class="close icon"></i>
+		<div class="content">
+			<div class="left">
+				<div class="imgContainer"></div>	
+			</div>
+			<div class="right">
+				<div class="ui fluid buttons">
+				<button class='ui blue button toggle-uec'>Mostrar UEC</button>
+				</div>
+				<br />
+				<div class="ui fluid buttons">
+				<button class='ui red button toggle-lesion'>Mostrar Lesiones</button>
+				</div>
+
+				<div id="message1" class='message' style='display: none;'>
+					<p>El Cáncer invasor que es visible, puede presentar diferentes aspectos:</p>
+					<p>Si el Cáncer se encuentra en estadio inicial.  El cuello uterino puede tener un aspecto densamente blanco con algunos vasos engrasados en forma de media luna y/o con una masa densa nudosa que sobre sale desde alguna sección del cuello uterino.  Crecimiento en forma de coliflor o ulcera en el cual algunas veces todavía es posible observar  la unión escamo columnar.</p>
+				</div>
+				<div id="message2" class='message' style='display: none;'>
+					<p>El Cáncer invasor que es visible, puede presentar diferentes aspectos:</p>
+					<p>Masa tumoral fungosa, sangrante con aspecto de carne molida en la que hay una pérdida total de la Anatomía del cérvix o cuello uterino.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<script>
+	$('.ui.checkbox').checkbox();
+
+	$gallery = $('#gallery');
+	$.each(data, function(i,v){
+		if (v.disabled != 1) {
+			$('<img/>')
+				.attr('src','data/images/' + v.image)
+				.toggleClass('c', (v.cancer == 1))
+				.toggleClass('p', (v.cancer == 0 && v.lesion == 1))
+				.toggleClass('n', (v.cancer == 0 && v.lesion == 0))
+				.attr('data-id',v.id)
+				.attr('data-cancer',v.cancer)
+				.attr('data-uec',v.uec)
+				.attr('data-lesion',v.lesion)
+				.attr('data-lesionimage',v.lesionimage)
+				.attr('data-uecimage',v.uecimage)
+				.appendTo($gallery);
+		}
+	});
+
+	$('.toggle-uec').click(function(){
+		$this = $(this);
+		$this.toggleClass('active');	
+		$('img.uec').toggle($this.hasClass('active'));
+	});
+
+	$('.toggle-lesion').click(function(){
+		$this = $(this);
+		$this.toggleClass('active');	
+		$('img.lesion').toggle($this.hasClass('active'));
+	});
+
+	$gallery.on('click','img',function(){
+		$this = $(this);
+		$modal = $('.ui.modal');
+		$imgContainer = $modal.find('.content .imgContainer');
+		dataid = $this.attr('data-id');
+		$imgContainer.html('');
+		$imgContainer.append($this.clone());
+		if ($this.attr('data-uecimage')) $imgContainer.append('<img class="uec overlay" style="display:none;" src="data/images/' + $this.attr('data-uecimage') + '" />');
+
+		if (!$this.hasClass('c') && $this.attr('data-lesionimage')) {
+			$imgContainer.append('<img class="lesion overlay" style="display:none;" src="data/images/' + $this.attr('data-lesionimage') + '" />');
+			$modal.find('.toggle-lesion').prop('disabled', false).removeClass('disabled');	
+		} else {
+			$modal.find('.toggle-lesion').prop('disabled', true).addClass('disabled');	
+		}
+
+		if ($this.data('cancer') == 1) {
+			if ($this.data('uecimage')) {
+				$modal.find('#message1').hide();
+				$modal.find('#message2').show();
+			} else {
+				$modal.find('#message1').show();
+				$modal.find('#message2').hide();
+			}
+		} else {
+			$('.message').hide();
+		}
+
+		// $modal.find('.content .right').html(data);
+		$modal.modal('show');
+	});
+
+	$('.filters').on('click','button',function(){
+		$this = $(this);
+		$this.siblings().removeClass('active').addClass('black');
+		$this.addClass('active').removeClass('black');
+		$targetContainer = $('#gallery');
+		$imgs = $targetContainer.find('img');
+		if ($this.data('category')) {
+			$imgs.hide();
+			var c = '.' + $this.data('category');
+			$imgs.filter(c).show();
+		} else {
+			$imgs.show();
+		}
+	});
+
+</script>
+</body>
+</html>

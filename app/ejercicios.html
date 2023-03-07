@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Ejercicios Interactivos</title>
+	<meta charset='utf-8'>
+	<meta http-equiv="Cache-control" content="no-cache">
+	<link rel="stylesheet" type="text/css" href="vendor/semantic-ui/css/semantic.css">	
+	<link rel="stylesheet" type="text/css" href="css/custom.css">	
+	<!-- <script src="js/jquery-1.11.1.min.js"></script> -->
+	<script src="js/jquery-2.1.1.min.js"></script>
+	<script src="vendor/semantic-ui/javascript/semantic.js"></script>
+	<script src="js/jquery.quiz.js"></script>
+	<script src="data/data.js"></script>
+</head>
+
+<body>
+	<div class="ui fixed transparent inverted main menu">
+		<div class="ui one column page grid">
+			<a class="title item" href='index.html'><i class='list layout icon'></i>Menú Principal</a>	
+			<a class="title item" href='resumen.html'><i class='info icon'></i>Resumen</a>	
+			<a class="active title item" href='ejercicios.html'><i class='checked checkbox icon'></i>Ejercicios Interactivos</a>	
+			<a class="title item" href='gallery.html'><i class='photo icon'></i>Galería de Imágenes</a>	
+			<!-- <a class="title item" href='practicetest.html'><i class='checked checkbox icon'></i>Exámen Práctica</a>	 -->
+		</div>
+	</div>
+
+	<div class="inner-content">
+	<div class="container">
+
+		<div class="quizContainer ui grid">
+			<div class="row">
+
+				<div class="nine wide column">
+					<div class="imgContainer"></div>	
+				</div>
+
+				<div class="questions seven wide column">
+
+					<div id='cancer' class='question'>
+						<h1>Sospechosa de Cancer?</h1>
+						<button class='ui button' type='button' name='cancer' value='1'>Si</button>
+						<button class='ui button' type='button' name='cancer' value='0'>No</button>
+					</div>
+
+					<div style='margin-top: -20px; margin-bottom: 20px;'><button id='uec' class='ui button'>Mostrar UEC</button></div>
+
+					<div id='lesion' class='question'>
+						<h1>IVAA Positivo?</h1>
+						<button class='ui button' type='button' name='lesion' value='1'>Si</button>
+						<button class='ui button' type='button' name='lesion' value='0'>No</button>
+					</div>
+
+					<div id='cryo' class='question'>
+						<h1>Tratamiento con Cryo?</h1>
+						<button class='ui button' type='button' name='cryo' value='1'>Si</button>
+						<button class='ui button' type='button' name='cryo' value='0'>No</button>
+					</div>
+
+					<div class="navigation">
+						<button class="ui button blue next">Siguiente<i class="icon circle right"></i></button>
+					</div>
+
+				</div>
+
+			</div>
+		</div>	
+
+		<div class="messages">
+			<div class='ui green message correct' style='display:none;'><i class="icon ok sign green"></i><b>Correct!</b></div>
+			<div class="ui red message cancer" style='display:none;'><i class='icon attention red'></i><b>Incorrecto!</b> Un cuello uterino es clasificado segun la IVAA como "sospechosa de cáncer" si se identifica un crecimiento en forma de coliflor o una úlcera o masa fungosa</div>
+			<div class="ui red message uec" style='display:none;'><i class='icon attention red'></i> <b>Incorrecto!</b></div>
+			<div class="ui red message lesion" style='display:none;'><i class='icon attention red'></i><b>Incorrecto!</b> El cuello uterino se clasifica con resultado positivo a la IVAA si presenta placas blancas elevadas y densas o epitelio acetoblanco en contacto con la UEC. El cuello uterino se clasifica con resultado negativo a la IVAA si es liso, rosado, uniforme y no presenta características especiales. Además, si se encuentra ectropión, pólipos, cervicitis, inflamación o huevos de Naboth, el cuello uterino se clasifica con resultado negativo a la IVAA.</div>
+			<div class="ui red message cryo" style='display:none;'>
+				<i class='icon attention red'></i>
+				<b>Las mujeres con resultados Positivos a la IVAA, califican para realizarse la crioterapia; si la lesión:</b>
+				<ul>
+					<li>No es Sospechosa de Cáncer</li>
+					<li>Ocupa menos del 75% del cuello uterino</li>
+					<li>No se extiende hacia la pared Vaginal</li>
+					<li>Se extienden menos de 2 mm mas allá del diámetro o de la sonda de crioterapia.</li>
+				</ul>
+			</div>
+		</div>
+
+	</div>
+	</div>
+
+<script>
+
+	$('.quizContainer').quiz({
+		'data': data
+	});
+
+</script>
+
+</body>
+</html>
