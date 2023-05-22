@@ -1,9 +1,21 @@
-* {
-	box-sizing: border-box;
-	font-size: 100%;
+:root{
+	font-size: 18px;
 }
 
+* {
+	box-sizing: border-box;
+	font-size: 1rem;
+}
+
+html, body {
+	width: 100%; /* Asegura que el ancho de la página sea el 100% del viewport */
+	height: 100%; /* Asegura que la altura de la página sea el 100% del viewport */
+	margin: 0; /* Elimina los márgenes predeterminados */
+	padding: 0; /* Elimina el padding predeterminado */
+  }
+
 body {
+	font-size: 1rem;
 	padding: 0;
 	margin: 0;
 	background: black;
@@ -14,6 +26,23 @@ body {
 .container {
 	max-width: 1200px;
 	margin: 0 auto;
+}
+
+/*Text*/
+h1 {
+	font-size: 2rem;
+}
+h2{
+	font-size: 1.8rem;
+}
+h3{
+	font-size: 1.5rem;
+}
+h4{
+	font-size: 1.2rem;
+}
+p,a,li,div,ul,ol{
+	font-size: 1rem;
 }
 
 
@@ -76,3 +105,30 @@ img.overlay {
 .modal {
 	color: black;
 }
+
+/*Responsive site*/
+
+@media only screen and (max-width: 768px) {
+	/* Estilos para dispositivos con pantalla de hasta 768px de ancho */
+	:root{
+		font-size: 16px;
+	}
+	h1{
+		font-size: 3.5rem;
+	}
+	body .inner-content{
+		height: 100vh;
+	}
+	body .inner-content .container{
+		height: 100%;
+	}
+  }
+  
+  @media (min-width: 769px) and (max-width: 1024px) {
+	/* Estilos para dispositivos con pantalla entre 769px y 1024px de ancho */
+  }
+  
+  @media (min-width: 1025px) {
+	/* Estilos para dispositivos con pantalla de 1025px en adelante */
+  }
+  
